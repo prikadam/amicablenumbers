@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Amicable Numbers</title>
+		
+	<style>
+		.m-t {
+			margin-top: 1rem;
+		}
+			
+	</style>
+		
+</head>
+<body>
+	<h1 style="color:blue;"> Amicable Numbers </h1>
+	<form>
+		Number 1:
+		<input type="text" id="num_one" name="num_one"><br><br>
+		Number 2:
+		<input type="text" id="num_two" name="num_two"><br><br>
+		<button id="submit" type="button">Submit</button>
+		<div id="isAmicable" class="m-t"></div>
+		<div id="factors"></div>
+	</form>
+	<script>
+		const submit = document.getElementById("submit");
+		submit.addEventListener('click', amicableChecker);
+
+		function amicableChecker() {
+
+			
+			var first_num = document.getElementById("num_one").value;
+			var second_num = document.getElementById("num_two").value;
+
+			
+			const factor_arr_one = getFactors(first_num);
+			const factor_arr_two = getFactors(second_num);
+
+			let mesg = '';
+			
+			if ((addFactors(factor_arr_one) == second_num) &&
+			(addFactors(factor_arr_two) == first_num)) {
+				mesg =
+				" The numbers:" + first_num + " and " + second_num + " are amicable."
+			} else {
+				mesg =
+				" The numbers:" + first_num + " and " + second_num + " are NOT amicable."
+			}
+			
+			writeToDoc('isAmicable', mesg);
+
+			const firstNoFactor = 'Factors of ' + first_num + ' = [' + factor_arr_one.join(', ') + '] <br/>';
+			const secondNoFactor = 'Factors of ' + second_num + ' = [' + factor_arr_two.join(', ') + ']';
+			writeToDoc('factors', firstNoFactor+secondNoFactor);
+
+		}
+
+		function addFactors(array) {
+			var sum = 0;
+			for (i = 0; i < array.length; i++) {
+				sum += array[i];
+				
+			}
+			return sum;
+		}
+
+
+		function getFactors(number) {
+			let factor_arr = [];
+
+			// iterate from 1 to number/2 and get the divisors
+			for (i = 1; i <= Math.floor(number/2); i++) {
+				if (number % i == 0) {
+					factor_arr.push(i);
+				}
+			}
+			return factor_arr;
+		}
+
+		function writeToDoc(id, message) {
+			document.getElementById(id).innerHTML = message;
+		}
+
+	</script>
+	
+</body>
+</html>
